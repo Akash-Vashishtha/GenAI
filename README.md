@@ -1,2 +1,2 @@
 # GenAI
-Code examples and Projects from GenAi Nanodegree at Udacity
+Code examples and Projects from GenAI Nanodegree at Udacity
