@@ -1,0 +1,51 @@
+import torch
+import torch.nn as nn
+
+#define a new class MLP that inherits from nn.Module, which is the base class for all neural network modules in PyTorch.
+#The __init__ method initializes the MLP model.
+#super(MLP, self).__init__() calls the constructor of the parent class (nn.Module).
+#self.hidden_layer = nn.Linear(input_size, 64) creates a linear layer that takes input_size features and outputs 64 features. This is the hidden layer.
+#self.output_layer = nn.Linear(64, 2) creates another linear layer that takes the 64 features from the hidden layer and outputs 2 features (for binary classification, for example).
+#self.activation = nn.ReLU() sets the activation function to ReLU (Rectified Linear Unit), which introduces non-linearity to the model.
+
+
+#The forward method defines how the input data flows through the network.
+#self.hidden_layer(x) computes the output of the hidden layer by applying the linear transformation to the input x.
+#self.activation(...) applies the ReLU activation function to the output of the hidden layer.
+#Finally, self.output_layer(...) computes the output of the network by applying the linear transformation from the hidden layer to the output layer.
+
+
+class MLP(nn.Module):
+        def __init__(self, input_size):
+            super(MLP, self).__init__()
+            self.hidden_layer = nn.Linear(input_size, 64)
+            self.output_layer = nn.Linear(64, 2)
+            self.activation = nn.ReLU()
+
+        def forward(self, x):
+            x = self.activation(self.hidden_layer(x))
+            return self.output_layer(x)
+
+#Here, we create an instance of the MLP class with an input size of 10. This means the model expects input data with 10 features.
+
+model = MLP(input_size=10)
+
+#This prints the architecture of the model, showing the layers and their configurations.
+
+print(model)
+
+# MLP(
+#   (hidden_layer): Linear(in_features=10, out_features=64, bias=True)
+#   (output_layer): Linear(in_features=64, out_features=2, bias=True)
+#   (activation): ReLU()
+# )
+
+
+#This line generates a random tensor with 10 elements (representing a sample input) using torch.rand(10).
+#The forward method is called with this random input, and it processes the input through the network, producing an output tensor.
+
+model.forward(torch.rand(10))
+
+
+#The output tensor represents the raw scores (logits) from the output layer. The values can be interpreted as the model's predictions before applying an activation function like Softmax for classification.
+# tensor([0.2294, 0.2650], grad_fn=<AddBackward0>)
